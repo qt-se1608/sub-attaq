@@ -1,16 +1,11 @@
 //Write by xudan.The first time to write is 7.1
-//modified the bug of torpedo by xudan,xulu,7.18
+//徐露修改了torpedo的发射，torpedo不会突然暂停，7月17号
 import QtQuick 2.0
 import VPlay 2.0
 
 EntityBase {
     id: entity
     entityType: "Torpedo"
-
-//    Component.onCompleted: {
-//        console.debug("torpedo.onCompleted, width:", width)
-//        applyForwardImpulse()
-//    }
 
     BoxCollider {
         id: boxCollider
@@ -25,7 +20,8 @@ EntityBase {
         body.bullet: true
         // we prevent the physics engine from applying rotation to the torpedo, because we will do it ourselves
         body.fixedRotation: true
-        linearVelocity.y:-30*3   // the velocity of y
+
+        linearVelocity.y:-8*32
 
         fixture.onBeginContact: {
             var fixture = other
@@ -52,11 +48,4 @@ EntityBase {
         height: boxCollider.height
     }
 
-
-
-//the speed and direction of torpedo
-//    function applyForwardImpulse() {
-//        boxCollider.body.applyLinearImpulse(Qt.point(0,-900),boxCollider.body.getWorldCenter())
-
-//    }
 }

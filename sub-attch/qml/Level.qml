@@ -17,8 +17,10 @@ Scene {
     visible: opacity > 0
     // if the scene is invisible, we disable it. In Qt 5, components are also enabled if they are invisible. This means any MouseArea in the Scene would still be active even we hide the Scene, since we do not want this to happen, we disable the Scene (and therefore also its children) if it is hidden
     enabled: visible
-    property int total
 
+   // property int coun: 0
+    property int total
+    property int coun
 
     property alias player: boat
     property alias submarine: submarine
@@ -72,7 +74,7 @@ Scene {
         id: submarine1
         width: 50
         height: 30
-        x: 100
+        x: 200
         y: 470
     }
 

@@ -1,5 +1,6 @@
 //Write by xudan.The first time to write is 7.1
 //The big modification  was 2 July
+//徐露与徐丹一起修改了子弹的发射数目和Torpedo击中boat船身不会歪，时间7月17号
 import QtQuick 2.0
 import VPlay 2.0
 
@@ -82,15 +83,11 @@ EntityBase {
         body.bullet: true
         body.linearDamping: 10
         body.angularDamping: 15
+        fixedRotation: true
 
         //move left and right
         force: Qt.point(twoAxisController.yAxis * forwardForce, 0)
 
-//        Component.onCompleted: {
-//            console.debug("boat.physics.x:", x)
-//            var mapped = mapToItem(world.debugDraw, x, y)
-//            console.debug("boat.physics.x world:", mapped.x)
-//        }
 
         fixture.onBeginContact: {
             var fixture = other
@@ -143,10 +140,13 @@ EntityBase {
 
     }
 //hand the action of fire and create bomb
-
+    property  int count : 0
     function handleInputAction(action) {
-        if (action === "fire") {
 
+        if (action === "fire") {
+//            var count = 0;
+           count ++;
+            if(count <= 5){
             // this is the point that we defined in Boat.qml for the rocket to spawn
             var imagePointInWorldCoordinates = mapToItem(
                         gameScene, image.imagePoints[0].x, image.imagePoints[0].y)
@@ -160,6 +160,18 @@ EntityBase {
                             x: imagePointInWorldCoordinates.x,
                             y: imagePointInWorldCoordinates.y
                         })
+            }
         }
+    }
+    property Timer boatTimer: Timer{
+        id:boatTimer
+        interval:5000
+        running: count > 4?"true":"false"
+
+        onTriggered: {
+            count = 0;
+            boatTimer.restart()
+        }
+
     }
 }

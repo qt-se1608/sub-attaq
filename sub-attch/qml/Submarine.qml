@@ -5,16 +5,16 @@ import VPlay 2.0
 EntityBase {
     id: submarine
 
+
     entityType: "Submarine"
     property  alias submarineImg: submarineImg
     preventFromRemovalFromEntityManager: true
-    //property int count: 0
+
 
     Image {
         id: submarineImg
         source: "../assets/submarine.png"
         anchors.fill: parent
-
     }
 
     BoxCollider {
@@ -32,12 +32,6 @@ EntityBase {
             var collidingType = otherEntity.entityType
             if(collidingType === "bomb"){
                 die()
-                if(submarine.visible === true)
-                {
-                    total--
-                    score += 10
-                }
-               // die()
             }
         }
     }
@@ -83,17 +77,17 @@ EntityBase {
         NumberAnimation {
             target: submarine
             property: "x"
-            to: 0
-            from:900
-            duration: Math.random()*1000+4000
+            to: 1900
+            from:/*gameScene.width*/x
+            duration: Math.random()*3000+4000
             easing.type: Easing.InOutQuad
         }
         NumberAnimation {
             target: submarine
             property: "x"
-            to:900
-            from:0
-            duration: Math.random()*1000 + 4000
+            to:/*600*/0
+            from:/*0*/1900
+            duration: Math.random()*3000+4000
             easing.type: Easing.InOutQuad
         }
         NumberAnimation{
@@ -131,42 +125,52 @@ EntityBase {
 
     function die()
     {
-        submarineImage.running = true
-
-}
+//        total--
+//        if(total === 0)
+//        {
+           submarineImage.running = true
+       score += 10
+//            total = coun
+//        }
+//        else/*(submarineImg.visible === true)*/
+//        {
+//            submarineImage.running = true
+//        }
+    }
     SequentialAnimation{
         id:submarineImagee
         running: false
-//        PropertyAnimation{
-//            target: submarineImg
-//            properties: "source"
-//            to:"../assets/explosion/submarine/step1.png"
-//        }
-//        PropertyAnimation{
-//            target:submarineImg
-//            properties: "source"
-//            to:"../assets/explosion/submarine/step2.png"
-//        }
-//        PropertyAnimation{
-//            target: submarineImg
-//            properties: "source"
-//            to:"../assets/explosion/submarine/step3.png"
-//        }
-//        PropertyAnimation{
-//            target: submarineImg
-//            properties: "source"
-//            to:"../assets/explosion/submarine/step4.png"
-//        }
-//        PropertyAnimation{
-//            target: submarineImg
-//            properties: "visible"
-//            to:"false"
-//        }
+        PropertyAnimation{
+            target: submarineImg
+            properties: "source"
+            to:"../assets/explosion/submarine/step1.png"
+        }
+        PropertyAnimation{
+            target:submarineImg
+            properties: "source"
+            to:"../assets/explosion/submarine/step2.png"
+        }
+        PropertyAnimation{
+            target: submarineImg
+            properties: "source"
+            to:"../assets/explosion/submarine/step3.png"
+        }
+        PropertyAnimation{
+            target: submarineImg
+            properties: "source"
+            to:"../assets/explosion/submarine/step4.png"
+        }
+        PropertyAnimation{
+            target: submarineImg
+            properties: "visible"
+            to:"false"
+        }
         PropertyAnimation{
             target: gameWindow
             properties: "state"
             to:"menu"
         }
+
     }
 
 }

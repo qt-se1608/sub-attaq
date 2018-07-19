@@ -7,7 +7,6 @@ import VPlayPlugins 1.0
 GameWindow {
     id: gameWindow
     property  int score: 0
-    //property int total:0
 
     state: "menu"
     screenWidth: 640
@@ -40,7 +39,7 @@ GameWindow {
     MenuScene {
       id: menuScene
       onPlayPressed:{
-          gameScene.total = 2
+          gameScene.total=2
           gameWindow.state = "game"
           entityManager.entityContainer = gameScene
           entityManager.removeEntitiesByFilter(["Torpedo","bomb"])
@@ -48,6 +47,7 @@ GameWindow {
           gameScene.player.image.visible = true
           gameScene.player.x = 390
           gameScene.player.y = 230
+         // entityManager.createEntityFromUrlWithProperties(Qt.resolvedUrl("Submarine.qml"), {x: 100, y: 470})
           gameScene.submarine.submarineImg.source = "../assets/submarine.png"
           gameScene.submarine.submarineImg.visible = true
           gameScene.submarine1.submarineImg.source = "../assets/submarine.png"
@@ -59,13 +59,15 @@ GameWindow {
     Level{
         id:gameScene
         total: 2
+        coun:2
         onBbackButtonPressed: gameWindow.state = "menu"
     }
 
     Level{
         id:gameScene2
         state: "game2"
-        total: 4
+        total: 3
+        coun:3
         property alias submarine2: submarine2
         Submarine{
                     id: submarine2
@@ -74,6 +76,7 @@ GameWindow {
                     x: 100
                     y: 570
         }
+
         onBbackButtonPressed: gameWindow.state = "menu"
     }
 
@@ -83,10 +86,11 @@ GameWindow {
       onBackButtonPressed: gameWindow.state = "menu"
       onLevelPressed:
       {
-          gameScene.total = 2
           gameWindow.state = "game"
           entityManager.entityContainer = gameScene
-          entityManager.removeAllEntities()
+          gameScene.total=2
+         // entityManager.removeAllEntities()
+            entityManager.removeEntitiesByFilter(["Torpedo","bomb"])
          // entityManager.createEntityFromUrl(Qt.resolvedUrl("Bomb.qml"),{}
           gameScene.player.image.source = "../assets/boat.png"
           gameScene.player.image.visible = true
@@ -100,11 +104,12 @@ GameWindow {
 
       }
       onLevel2Pressed: {
-          gameScene.total = 4
           gameWindow.state = "game2"
           entityManager.entityContainer = gameScene2
-          entityManager.removeAllEntities()
-          entityManager.createEntityFromComponent(submarineComponent)
+          gameScene2.total=3
+          //entityManager.removeAllEntities()
+            entityManager.removeEntitiesByFilter(["Torpedo","bomb"])
+          //entityManager.createEntityFromComponent(submarineComponent)
           gameScene2.player.image.source = "../assets/boat.png"
           gameScene2.player.image.visible = true
           gameScene2.player.x = 390
@@ -119,15 +124,6 @@ GameWindow {
       }
     }
 
-    Component{
-        id:submarineComponent
-        Submarine{
-            width: 50
-            height: 30
-            x: 0
-            y: 470
-        }
-    }
 
     GameoverScene{
         id:gameoverScene
